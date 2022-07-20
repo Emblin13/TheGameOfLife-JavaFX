@@ -15,7 +15,7 @@ public class Main extends Application {
 
     Stage window;
     int scale;
-    int baseHeight = 2000;
+    int baseHeight = 1000;
 
     @Override
     public void start(Stage primaryStage) {
@@ -23,7 +23,7 @@ public class Main extends Application {
         window.setTitle("Conway's Game of Life!");
 
         Canvas canvas = new Canvas(baseHeight,baseHeight);
-        drawCanvas(canvas, 1);
+        scaleCanvas(canvas, 2); //Default scale of 2
 
         //Scale buttons HBox
         Button scale1 = new Button("1x Zoom");
@@ -40,7 +40,7 @@ public class Main extends Application {
 
         //ScrollPane for Canvas
         ScrollPane sp = new ScrollPane(canvas);
-        sp.setMaxWidth(1200);
+        sp.setMaxWidth(1000);
         sp.setMaxHeight(800);
         //sp.setHmax(400);
         //sp.setVmax(800);
@@ -69,8 +69,8 @@ public class Main extends Application {
         canvas.getGraphicsContext2D().fillRect(0,0,height,height);
         canvas.getGraphicsContext2D().setStroke(Color.BLACK);
         for(int i = 0; i < 100; i++) {
-            canvas.getGraphicsContext2D().strokeLine((i*20*scale),0, (i*20*scale), height);
-            canvas.getGraphicsContext2D().strokeLine(0, (i*20*scale), height, (i*20*scale));
+            canvas.getGraphicsContext2D().strokeLine((i*10*scale),0, (i*10*scale), height);
+            canvas.getGraphicsContext2D().strokeLine(0, (i*10*scale), height, (i*10*scale));
         }
     }
 }
