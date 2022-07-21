@@ -6,6 +6,7 @@ import javafx.scene.paint.Color;
 public class GameGrid {
 
     int baseHeight;
+    int scale;
     Canvas canvas;
     CellGrid cellGrid;
 
@@ -13,16 +14,24 @@ public class GameGrid {
         this.canvas = new Canvas(baseHeight,baseHeight);
         this.baseHeight = 1000;
         this.cellGrid = new CellGrid(10,10);
+
+    }
+
+    public void nextCycle() {
+        cellGrid.countNeighbors();
+        cellGrid.deathAndBirth();
+        drawCanvas(this.scale);
     }
 
     public void scaleCanvas(int newScale) {
+        this.scale = newScale;
         double newHeight = baseHeight * newScale;
         this.canvas.setHeight(newHeight);
         this.canvas.setWidth(newHeight);
         drawCanvas(newScale);
     }
 
-    public void drawCanvas(int scale) {
+    public void drawCanvas(int scale) { //Consider removing scale as a passed-in variable
         double height = this.canvas.getHeight();
         this.canvas.getGraphicsContext2D().setFill(Color.WHITE);
         this.canvas.getGraphicsContext2D().fillRect(0,0,height,height);
@@ -39,33 +48,20 @@ public class GameGrid {
         fillCells(scale);
     }
 
-    public void fillCells(int scale) {
-        //Receive a 2d array of which cells are alive
-//        Cell[][] cellArr = new Cell[100][100];
-//        for(int i = 0; i < 100; i++) {
-//            for(int j = 0; j < 100; j++) {
-//                cellArr[i][j] = new Cell();
-//            }
-//        }
-//        for(int i = 10; i < 60; i++) {
-//            cellArr[i][4] = new Cell(1);
-//            cellArr[i][i] = new Cell(1);
-//            cellArr[i+1][i] = new Cell(1);
-//            cellArr[i-1][i] = new Cell(1);
-//        }
-
+    public void fillCells(int scale) { //Consider removing scale as a passed-in variable
         this.canvas.getGraphicsContext2D().setFill(Color.DARKRED);
-        for(int i = 0; i < 100; i++) {
-            for(int j = 0; j < 100; j++) {
-
+        for(int i = 0; i < 10; i++) {
+            for(int j = 0; j < 10; j++) {
+                for(int k = 0; k < 10; k++) {
+                    for(int l = 0; l < 10; l++) {
+                        if(cellGrid.cellChunkArr[i][j].cellArr[k][l].state == 1) {
+                            //I have no idea why 9.75*scale works but 10*scale doesn't
+                            this.canvas.getGraphicsContext2D().fillRect(1 + 10*scale*((j*10)+l), (1 + 10*scale*((i*10)+k)),
+                                    (9.75*scale), (9.75*scale));
+                        }
+                    }
+                }
             }
         }
     }
-/*
-                if(cellGrid.cellChunkArr[i/10][j/10].cellArr[i][j].state == 1) {
-                    this.canvas.getGraphicsContext2D().fillRect((1 + (i*10*scale)), (1 + (j*10*scale)),
-                            (9.75*scale), (9.75*scale)); //I have no idea why 9.75*scale works but 10*scale doesn't
-                }
- */
-
 }

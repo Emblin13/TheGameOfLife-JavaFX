@@ -12,6 +12,5 @@ public class CellChunk {
                 cellArr[i][j] = new Cell();
             }
         }
-        cellArr[0][0].state = 1; //Marks the top right corner of a chunk as 1
     }
 }

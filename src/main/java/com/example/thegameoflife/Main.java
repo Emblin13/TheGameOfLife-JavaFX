@@ -44,15 +44,36 @@ public class Main extends Application {
         scaleBox.setSpacing(5);
         scaleBox.setAlignment(Pos.CENTER);
 
+        //CycleSpeed buttons HBox
+        Button speed1 = new Button("Paused");
+
         //ScrollPane for Canvas
         ScrollPane sp = new ScrollPane(gameGrid.canvas);
         sp.setMaxWidth(1000);
         sp.setMaxHeight(800);
 
+        //NextCycle Button
+        Button cycleButton = new Button("Next Generation");
+        cycleButton.setOnAction(e -> this.gameGrid.nextCycle());
+
+        //SpawnGlider Button
+        Button gliderButton = new Button("Spawn Glider");
+        gliderButton.setOnAction(e -> {
+            gameGrid.cellGrid.spawnGlider(1,0,5,6);
+            gameGrid.cellGrid.spawnCube(2,2);
+            gameGrid.drawCanvas(gameGrid.scale);
+        });
+
+        //HBox for bottom buttons
+        HBox miscBox = new HBox(cycleButton, gliderButton);
+        miscBox.setSpacing(5);
+        miscBox.setAlignment(Pos.CENTER);
+
         //BorderPane for layout
         BorderPane bp = new BorderPane();
         bp.setCenter(sp);
         bp.setTop(scaleBox);
+        bp.setBottom(miscBox);
 
         return bp;
     }
