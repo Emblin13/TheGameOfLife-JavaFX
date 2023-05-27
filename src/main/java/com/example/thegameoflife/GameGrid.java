@@ -52,6 +52,9 @@ public class GameGrid {
         this.canvas.getGraphicsContext2D().setFill(Color.DARKRED);
         for(int i = 0; i < 10; i++) {
             for(int j = 0; j < 10; j++) {
+//                if(cellGrid.cellChunkArr[i][j].state == 0) {
+//                    continue; //Skips inactive chunks
+//                }
                 for(int k = 0; k < 10; k++) {
                     for(int l = 0; l < 10; l++) {
                         if(cellGrid.cellChunkArr[i][j].cellArr[k][l].state == 1) {

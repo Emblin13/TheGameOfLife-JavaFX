@@ -7,12 +7,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class Main extends Application {
 
     Stage window;
     GameGrid gameGrid;
+    GameSpeed gameSpeed;
 
     @Override
     public void start(Stage primaryStage) {
@@ -21,6 +23,7 @@ public class Main extends Application {
 
         this.gameGrid = new GameGrid();
         gameGrid.scaleCanvas(2); //Default scale of 2
+        this.gameSpeed = new GameSpeed(gameGrid);
 
         BorderPane bp = buildGUI();
 
@@ -45,7 +48,51 @@ public class Main extends Application {
         scaleBox.setAlignment(Pos.CENTER);
 
         //CycleSpeed buttons HBox
-        Button speed1 = new Button("Paused");
+        Button speed0 = new Button("Pause");
+        speed0.setOnAction(e -> {
+            gameSpeed.shutdownCycle();
+        });
+        Button speed1 = new Button("1x Speed");
+        speed1.setOnAction(e -> {
+            gameSpeed.shutdownCycle();
+            this.gameSpeed.gameSpeed(2000);
+        });
+        Button speed2 = new Button("2x Speed");
+        speed2.setOnAction(e -> {
+            gameSpeed.shutdownCycle();
+            this.gameSpeed.gameSpeed(1000);
+        });
+        Button speed4 = new Button("4x Speed");
+        speed4.setOnAction(e -> {
+            gameSpeed.shutdownCycle();
+            this.gameSpeed.gameSpeed(500);
+        });
+        Button speed8 = new Button("8x Speed");
+        speed8.setOnAction(e -> {
+            gameSpeed.shutdownCycle();
+            this.gameSpeed.gameSpeed(250);
+        });
+        Button speed16 = new Button("16x Speed");
+        speed16.setOnAction(e -> {
+            gameSpeed.shutdownCycle();
+            this.gameSpeed.gameSpeed(125);
+        });
+        Button speed32 = new Button("32x Speed");
+        speed32.setOnAction(e -> {
+            gameSpeed.shutdownCycle();
+            this.gameSpeed.gameSpeed(60);
+        });
+        Button speed64 = new Button("64x Speed");
+        speed64.setOnAction(e -> {
+            gameSpeed.shutdownCycle();
+            this.gameSpeed.gameSpeed(30);
+        });
+        HBox speedBox = new HBox(speed0, speed1, speed2, speed4, speed8, speed16, speed32, speed64);
+        speedBox.setSpacing(5);
+        speedBox.setAlignment(Pos.CENTER);
+
+        //VBox for the HBoxes
+        VBox topBox = new VBox(scaleBox, speedBox);
 
         //ScrollPane for Canvas
         ScrollPane sp = new ScrollPane(gameGrid.canvas);
@@ -72,7 +119,7 @@ public class Main extends Application {
         //BorderPane for layout
         BorderPane bp = new BorderPane();
         bp.setCenter(sp);
-        bp.setTop(scaleBox);
+        bp.setTop(topBox);
         bp.setBottom(miscBox);
 
         return bp;
