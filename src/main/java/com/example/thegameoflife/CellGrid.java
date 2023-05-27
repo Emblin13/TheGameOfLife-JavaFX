@@ -225,7 +225,7 @@ public class CellGrid {
         for(int i = 0; i < 10; i++) {
             for(int j = 0; j < 10; j++) {
                 if(cellChunkArr[i][j].state == 0) {
-                    continue; //Skips inactive chunks
+                    //continue; //Skips inactive chunks
                 }
                 for(int k = 0; k < 10; k++) {
                     for(int l = 0; l < 10; l++) {
